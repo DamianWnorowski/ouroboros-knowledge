@@ -1,0 +1,334 @@
+{
+  "_comment": "Single config for all integrity/boundary/protection tools. Edit THIS, not source code.",
+  "_auto_updated": false,
+  "protected_files": {
+    "_comment": "Patterns that file_protection.sh blocks. Add new entries here, not in code.",
+    "block_extensions": [
+      ".safetensors",
+      ".gguf",
+      ".bin"
+    ],
+    "block_contains": [
+      "checkpoints_stable"
+    ],
+    "block_basenames": [
+      "Cargo.lock",
+      ".env",
+      ".env.local",
+      ".env.production",
+      "brain_dpo.jsonl"
+    ],
+    "block_paths": [
+      "fracture-engine/tests/GROUND_TRUTH.py"
+    ]
+  },
+  "boundary": {
+    "_comment": "ouro-boundary daemon config. Dirs to watch, dirs to ignore, extensions to quarantine.",
+    "watch_dirs": [
+      "~",
+      "~/Desktop",
+      "~/Documents",
+      "~/Downloads",
+      "~/Music",
+      "~/Pictures",
+      "~/Videos",
+      "~/Public",
+      "~/Templates"
+    ],
+    "safe_dirs_auto_discover": true,
+    "safe_dir_seeds": [
+      ".ssh",
+      ".gnupg",
+      ".config",
+      ".local",
+      ".cache",
+      ".mozilla",
+      ".vscode",
+      ".nvm",
+      ".npm",
+      ".cargo",
+      ".rustup",
+      ".bun",
+      ".ollama",
+      ".docker",
+      ".gradle",
+      ".pki",
+      ".claude",
+      ".codex",
+      ".gemini",
+      ".grok",
+      "snap",
+      "go",
+      "ouro",
+      "llm-hub"
+    ],
+    "code_extensions": [
+      "py",
+      "sh",
+      "js",
+      "ts",
+      "rs",
+      "go",
+      "rb",
+      "pl",
+      "java",
+      "c",
+      "cpp",
+      "h",
+      "json",
+      "yaml",
+      "yml",
+      "toml",
+      "jsx",
+      "tsx",
+      "mjs",
+      "cjs",
+      "lua",
+      "zig",
+      "nim",
+      "kt",
+      "swift"
+    ],
+    "known_artifacts": [
+      "Makefile",
+      "Dockerfile",
+      "Procfile",
+      "Gemfile",
+      "CMakeLists.txt",
+      "docker-compose.yml"
+    ],
+    "prune_days": 30,
+    "burst_window_sec": 10,
+    "burst_threshold": 5
+  },
+  "hardcode_patterns": {
+    "_comment": "ALL hardcoding anti-patterns. post_edit_integrity checks on every edit. ouro-integrity scans system-wide.",
+    "categories": {
+      "stale_paths": {
+        "severity": "high",
+        "patterns": [
+          {
+            "regex": "/home/reborn/ouroboros/",
+            "description": "Pre-migration path \u2192 ~/ouro/ouroboros/"
+          },
+          {
+            "regex": "ouro/src/core/",
+            "description": "Stale src/core \u2192 doesn't exist"
+          },
+          {
+            "regex": "\\$HOME/ouroboros/",
+            "description": "Pre-migration $HOME/ouroboros"
+          }
+        ]
+      },
+      "hardcoded_user": {
+        "severity": "medium",
+        "description": "Hardcoded username \u2014 breaks on different machines",
+        "patterns": [
+          {
+            "regex": "/home/reborn/(?!ouro/|\\.claude/)",
+            "description": "Hardcoded /home/reborn/ \u2192 use $HOME or Path.home()",
+            "exclude_files": [
+              "settings.json",
+              "integrity.json"
+            ]
+          }
+        ]
+      },
+      "phantom_env_vars": {
+        "severity": "high",
+        "only_in": "hooks",
+        "patterns": [
+          {
+            "regex": "CLAUDE_FILE",
+            "description": "Phantom env var \u2192 use stdin JSON or hook_env.sh",
+            "exclude_files": [
+              "hook_env.sh",
+              "HOOK_RULES.md",
+              "*.md"
+            ]
+          },
+          {
+            "regex": "CLAUDE_PROMPT|CLAUDE_MESSAGE|CLAUDE_TOOL_INPUT",
+            "description": "Phantom env var \u2192 read from stdin JSON",
+            "exclude_files": [
+              "*.md"
+            ]
+          }
+        ]
+      },
+      "hardcoded_ports": {
+        "severity": "low",
+        "description": "Hardcoded ports \u2014 should use env vars",
+        "patterns": [
+          {
+            "regex": "localhost:11434(?!/)",
+            "description": "Hardcoded Ollama port \u2192 use $OLLAMA_URL or env var"
+          },
+          {
+            "regex": "localhost:6333",
+            "description": "Hardcoded Qdrant port \u2192 use $QDRANT_URL or env var"
+          },
+          {
+            "regex": "localhost:7780",
+            "description": "Hardcoded MCP port \u2192 use env var"
+          },
+          {
+            "regex": "localhost:8080(?!/)",
+            "description": "Hardcoded SearXNG port \u2192 use $SEARXNG_URL"
+          }
+        ],
+        "exclude_files": [
+          "integrity.json",
+          "CLAUDE.md",
+          "MEMORY.md",
+          "*.md"
+        ]
+      },
+      "hardcoded_models": {
+        "severity": "low",
+        "only_in": "src",
+        "description": "Hardcoded model names \u2014 should use discover_models()",
+        "patterns": [
+          {
+            "regex": "\"ouroboros-fracture:latest\"",
+            "description": "Hardcoded model \u2192 use discover_models(prefer='code')"
+          },
+          {
+            "regex": "\"qwen2\\.5-coder:7b\"",
+            "description": "Hardcoded fallback model \u2192 use pick_models()"
+          },
+          {
+            "regex": "\"mistral:latest\"",
+            "description": "Hardcoded model name"
+          }
+        ],
+        "exclude_files": [
+          "__init__.py",
+          "CLAUDE.md",
+          "*.md",
+          "*.json"
+        ]
+      },
+      "magic_numbers": {
+        "severity": "info",
+        "only_in": "hooks",
+        "description": "Magic numbers that should be in config",
+        "patterns": [
+          {
+            "regex": "timeout.*[0-9]{4,}",
+            "description": "Large timeout value \u2014 consider making configurable"
+          },
+          {
+            "regex": "sleep [0-9]{3,}",
+            "description": "Long sleep \u2014 consider making configurable"
+          }
+        ]
+      }
+    }
+  },
+  "daemon_health": {
+    "_comment": "Daemons to monitor. pid_file is the SINGLE SOURCE OF TRUTH for each daemon's PID. All tools MUST read this.",
+    "daemons": [
+      {
+        "name": "autonomous_brain",
+        "pid_file": "/tmp/ouro-daemons/brain.pid",
+        "output": "ouroboros/projects/cognitive-trace-engine/results/brain_dpo.jsonl",
+        "max_age_hours": 2,
+        "pgrep": "autonomous_brain"
+      },
+      {
+        "name": "continuous_maximizer",
+        "pid_file": "/tmp/ouro-daemons/maximizer.pid",
+        "output": "ouroboros/projects/cognitive-trace-engine/logs/maximizer.log",
+        "max_age_hours": 6,
+        "pgrep": "continuous_maximizer"
+      },
+      {
+        "name": "src.reactive",
+        "pid_file": "/tmp/ouro-daemons/reactive.pid",
+        "output": "ouroboros/projects/fracture-engine/results/reactive.jsonl",
+        "max_age_hours": 1,
+        "pgrep": "src.reactive"
+      },
+      {
+        "name": "src.autonomy",
+        "pid_file": "/tmp/ouro-daemons/autonomy.pid",
+        "output": "logs/fracture_autonomy.log",
+        "max_age_hours": 6,
+        "pgrep": "src.autonomy"
+      },
+      {
+        "name": "ouro-heartbeat",
+        "pid_file": "/tmp/ouro-daemons/heartbeat.pid",
+        "output": "logs/heartbeat.log",
+        "max_age_hours": 12,
+        "pgrep": "ouro-heartbeat"
+      },
+      {
+        "name": "ouro-boundary",
+        "pid_file": "/tmp/ouro-daemons/boundary.pid",
+        "output": "logs/boundary.log",
+        "max_age_hours": 1,
+        "pgrep": "ouro-boundary"
+      }
+    ]
+  },
+  "silent_success_patterns": {
+    "_comment": "Anti-patterns to flag in hooks AND scripts. Regex patterns that indicate silent failure.",
+    "patterns": [
+      "\\[ -z \"\\$.*\" \\] && exit 0",
+      "\\[ ! -[fd] .* \\] && exit 0",
+      "if not .*: sys.exit\\(0\\)",
+      "if not .*:\\s*return$",
+      "os.environ.get\\(\"CLAUDE_",
+      "except.*:\\s*pass$",
+      "except.*:\\s*return None$",
+      "2>/dev/null \\|\\| exit 0"
+    ],
+    "require_warning_if_exit_0": true,
+    "scan_scope": "hooks_and_bin"
+  },
+  "disk_health": {
+    "warn_percent": 90,
+    "critical_percent": 95,
+    "mount_point": "/"
+  },
+  "services": {
+    "_comment": "HTTP services to health-check.",
+    "checks": [
+      {
+        "name": "mcp-server",
+        "url": "http://localhost:7780/status",
+        "timeout_sec": 5
+      },
+      {
+        "name": "ollama",
+        "url": "http://localhost:11434/api/tags",
+        "timeout_sec": 5
+      },
+      {
+        "name": "qdrant",
+        "url": "http://localhost:6333/collections",
+        "timeout_sec": 5
+      }
+    ]
+  },
+  "scan_exclude_dirs": {
+    "_comment": "Directories to exclude from integrity path scanning. Relative to OURO_ROOT.",
+    "dirs": [
+      "bin/py/one-off",
+      "bin/one-off",
+      "cold",
+      "data"
+    ]
+  },
+  "config_backup": {
+    "_comment": "Files to auto-backup before modification. Keeps last N copies.",
+    "files": [
+      "~/.claude/settings.json",
+      "~/ouro/config/integrity.json"
+    ],
+    "max_backups": 3
+  }
+}
