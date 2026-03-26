@@ -1,0 +1,1 @@
+ARM is a proprietary family of reduced instruction set computer (RISC) architectures developed and licensed by Arm Ltd., widely known for its high power efficiency and dominance in mobile, embedded, and increasingly, high-performance computing systems.

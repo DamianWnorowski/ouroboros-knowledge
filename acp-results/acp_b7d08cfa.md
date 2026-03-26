@@ -1,0 +1,1 @@
+MIPS can refer to either a family of reduced instruction set computer (RISC) architectures designed for efficient processing, or a metric measuring a computer's performance in Millions of Instructions Per Second.

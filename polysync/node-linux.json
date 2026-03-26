@@ -1,0 +1,14 @@
+{
+  "node_id": "d-linux",
+  "hostname": "reborn",
+  "os": "linux",
+  "python_cmd": "python3",
+  "claude_dir": "/home/reborn/.claude",
+  "sync_dir": "/home/reborn/ouro/src/dotD",
+  "ouro_root": "/home/reborn/ouro",
+  "role": "secondary",
+  "capabilities": ["gpu-dual", "docker", "ollama", "qdrant", "redis", "full-stack"],
+  "local_dbs": ["usage_tracker.json", "global_tasks.jsonl", "adaptive_rewards.json"],
+  "providers": ["ollama", "antigravity", "gemini_cli", "codex_cli", "claude_cli", "grok_cli", "aider"],
+  "session": "D13-2026-03-26"
+}

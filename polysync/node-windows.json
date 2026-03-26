@@ -1,0 +1,19 @@
+{
+  "node_id": "d-win",
+  "hostname": "D",
+  "os": "windows",
+  "python_cmd": "python3",
+  "claude_dir": "C:\\Users\\damia\\sync\\dotD\\claude",
+  "sync_dir": "C:\\Users\\damia\\sync\\dotD",
+  "role": "primary",
+  "capabilities": [
+    "gpu",
+    "docker",
+    "full-stack"
+  ],
+  "local_dbs": [
+    "memory.db",
+    "workload.db",
+    "healer.db"
+  ]
+}

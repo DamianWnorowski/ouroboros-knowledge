@@ -1,0 +1,1 @@
+MIPS (Microprocessor without Interlocked Pipelined Stages) is a family of reduced instruction set computer (RISC) architectures historically prominent in embedded systems, networking equipment, and academic computing courses.

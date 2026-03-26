@@ -1,0 +1,5 @@
+Here are 3 key points that differentiate WebSocket from HTTP:
+
+1. **Communication Model:** HTTP is strictly unidirectional and relies on a "request-response" model (the client must always request data from the server). WebSocket is bidirectional and full-duplex, allowing both the client and the server to push messages to each other independently at any time.
+2. **Connection Persistence (Statefulness):** HTTP is stateless; each request is essentially an isolated event, and a new connection is typically opened and closed per request (though HTTP keep-alive mitigates this slightly). WebSocket is stateful; it starts with an HTTP handshake, then "upgrades" to a persistent, long-lived TCP connection that remains open until explicitly closed by either party.
+3. **Data Overhead:** Because HTTP requests are independent, every request carries a full set of HTTP headers (cookies, auth tokens, metadata), which adds significant overhead. WebSocket connections, once established, send data in lightweight "frames" without the heavy HTTP header overhead, making it much more efficient for high-frequency or real-time data transfer.

@@ -1,0 +1,1 @@
+x86-64 (also known as x64, AMD64, or Intel 64) is a 64-bit extension of the widely used x86 instruction set architecture, enabling modern processors to handle vast amounts of memory and process data in 64-bit chunks.

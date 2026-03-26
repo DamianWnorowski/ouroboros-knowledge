@@ -1,0 +1,1 @@
+RISC-V is an open-standard, royalty-free instruction set architecture based on established reduced instruction set computer principles that allows anyone to design, manufacture, and sell compatible processors.
