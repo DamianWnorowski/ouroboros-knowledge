@@ -233,21 +233,21 @@
       {
         "name": "autonomous_brain",
         "pid_file": "/tmp/ouro-daemons/brain.pid",
-        "output": "ouroboros/projects/cognitive-trace-engine/results/brain_dpo.jsonl",
+        "output": "src/ouroboros/projects/cognitive-trace-engine/results/brain_dpo.jsonl",
         "max_age_hours": 2,
         "pgrep": "autonomous_brain"
       },
       {
         "name": "continuous_maximizer",
         "pid_file": "/tmp/ouro-daemons/maximizer.pid",
-        "output": "ouroboros/projects/cognitive-trace-engine/logs/maximizer.log",
+        "output": "src/ouroboros/projects/cognitive-trace-engine/logs/maximizer.log",
         "max_age_hours": 6,
         "pgrep": "continuous_maximizer"
       },
       {
         "name": "src.reactive",
         "pid_file": "/tmp/ouro-daemons/reactive.pid",
-        "output": "ouroboros/projects/fracture-engine/results/reactive.jsonl",
+        "output": "src/ouroboros/projects/fracture-engine/results/reactive.jsonl",
         "max_age_hours": 1,
         "pgrep": "src.reactive"
       },

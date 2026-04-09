@@ -22,7 +22,7 @@ type: reference
 - **Open-WebUI** — Ollama frontend, Docker
 
 ## Omni-Pipeline Location
-- Core: `~/ouro/ouroboros/projects/fracture-engine/src/__init__.py` → `smart_llm_call()`
+- Core: `~/ouro/src/ouroboros/projects/fracture-engine/src/__init__.py` → `smart_llm_call()`
 - Usage tracker: `~/ouro/bin/py/cli_usage_tracker.py`
 - Dashboard: `~/ouro/bin/py/check_usage.py`
 
